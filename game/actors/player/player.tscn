@@ -10,8 +10,10 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_c7hf2"]
 size = Vector3(1.0899482, 0.43584716, 0.36755738)
 
-[node name="player" type="CharacterBody3D" unique_id=489851307]
+[node name="player" type="CharacterBody3D" unique_id=489851307 node_paths=PackedStringArray("mouse_capture", "camera") groups=["player"]]
 script = ExtResource("1_em52k")
+mouse_capture = NodePath("components/MouseCaptureComponent")
+camera = NodePath("CameraPivot/Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1033842879]
 shape = SubResource("CapsuleShape3D_2w0hk")
@@ -20,14 +22,15 @@ shape = SubResource("CapsuleShape3D_2w0hk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77873236, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1239620514]
+fov = 72.61815
 
 [node name="RightHand" type="Sprite3D" parent="CameraPivot/Camera3D" unique_id=553526834]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.3120113, -0.24686307, -0.36928844)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.3120113, -0.24686307, -0.374663)
 no_depth_test = true
 texture = ExtResource("1_c7hf2")
 
 [node name="LeftHand" type="Sprite3D" parent="CameraPivot/Camera3D" unique_id=923656666]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.26217994, -0.24686307, -0.37704775)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.26217994, -0.24686307, -0.38242233)
 flip_h = true
 no_depth_test = true
 texture = ExtResource("1_c7hf2")

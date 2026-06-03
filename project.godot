@@ -26,6 +26,11 @@ folder_colors={
 "res://game/": "red"
 }
 
+[global_group]
+
+player=""
+npc="non playable character"
+
 [input]
 
 left={
