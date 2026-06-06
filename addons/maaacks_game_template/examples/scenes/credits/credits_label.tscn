@@ -6,16 +6,17 @@
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -352.5
+offset_bottom = 374.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 bbcode_enabled = true
-text = "[font_size=48]Collaborators[/font_size]
+text = "[font_size=48]CREATOR[/font_size]
 
 [font_size=32]Role[/font_size]
-Person 1  
-Person 2  
+BANE
 [url=]Person w/ Link[/url]  
 
 [font_size=48]Sourced[/font_size]
@@ -47,6 +48,11 @@ License: [url=LICENSE.txt]MIT License[/url]
 [img=80]res:///addons/maaacks_game_template/examples/assets/git_logo/Git-Logo-2Color.png[/img]  
 Author: [url=https://github.com/torvalds]Linus Torvalds[/url]  
 Source: [url=https://git-scm.com/downloads]git-scm.com[/url]  
+License: [url=https://opensource.org/licenses/GPL-2.0]GNU General Public License version 2[/url]
+
+[font_size=24]terrain 3d[/font_size]
+Author: [url=https://github.com/TokisanGames]Tokisan Games[/url]  
+Source: [url=https://github.com/TokisanGames/Terrain3D]terrian 3d github[/url]  
 License: [url=https://opensource.org/licenses/GPL-2.0]GNU General Public License version 2[/url]
 "
 fit_content = true

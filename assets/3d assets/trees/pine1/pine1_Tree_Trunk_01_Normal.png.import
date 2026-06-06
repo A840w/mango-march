@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3ejgtnyledab"
 path.s3tc="res://.godot/imported/pine1_Tree_Trunk_01_Normal.png-aad79d5b4fec4545dde73e49cf0cc588.s3tc.ctex"
+path.etc2="res://.godot/imported/pine1_Tree_Trunk_01_Normal.png-aad79d5b4fec4545dde73e49cf0cc588.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d assets/trees/pine1/pine1_Tree_Trunk_01_Normal.png"
-dest_files=["res://.godot/imported/pine1_Tree_Trunk_01_Normal.png-aad79d5b4fec4545dde73e49cf0cc588.s3tc.ctex"]
+dest_files=["res://.godot/imported/pine1_Tree_Trunk_01_Normal.png-aad79d5b4fec4545dde73e49cf0cc588.s3tc.ctex", "res://.godot/imported/pine1_Tree_Trunk_01_Normal.png-aad79d5b4fec4545dde73e49cf0cc588.etc2.ctex"]
 
 [params]
 

@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b21xta3bvjryg"
 path.s3tc="res://.godot/imported/mango_tree_L_bark_roughness.png-ea3550038fe1ad285f95133aad9d6b23.s3tc.ctex"
+path.etc2="res://.godot/imported/mango_tree_L_bark_roughness.png-ea3550038fe1ad285f95133aad9d6b23.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d assets/trees/mango/mango_tree_L_bark_roughness.png"
-dest_files=["res://.godot/imported/mango_tree_L_bark_roughness.png-ea3550038fe1ad285f95133aad9d6b23.s3tc.ctex"]
+dest_files=["res://.godot/imported/mango_tree_L_bark_roughness.png-ea3550038fe1ad285f95133aad9d6b23.s3tc.ctex", "res://.godot/imported/mango_tree_L_bark_roughness.png-ea3550038fe1ad285f95133aad9d6b23.etc2.ctex"]
 
 [params]
 

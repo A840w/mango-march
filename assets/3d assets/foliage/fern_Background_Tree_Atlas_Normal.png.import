@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://brinrtom4aohj"
 path.s3tc="res://.godot/imported/fern_Background_Tree_Atlas_Normal.png-d37b0ee11e9e8dce6c06bf6280af2194.s3tc.ctex"
+path.etc2="res://.godot/imported/fern_Background_Tree_Atlas_Normal.png-d37b0ee11e9e8dce6c06bf6280af2194.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d assets/foliage/fern_Background_Tree_Atlas_Normal.png"
-dest_files=["res://.godot/imported/fern_Background_Tree_Atlas_Normal.png-d37b0ee11e9e8dce6c06bf6280af2194.s3tc.ctex"]
+dest_files=["res://.godot/imported/fern_Background_Tree_Atlas_Normal.png-d37b0ee11e9e8dce6c06bf6280af2194.s3tc.ctex", "res://.godot/imported/fern_Background_Tree_Atlas_Normal.png-d37b0ee11e9e8dce6c06bf6280af2194.etc2.ctex"]
 
 [params]
 

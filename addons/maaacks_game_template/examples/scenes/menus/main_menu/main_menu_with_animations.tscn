@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b5qy5nr1wivs4" path="res://addons/maaacks_game_template/examples/scenes/menus/main_menu/main_menu_with_animations.gd" id="2_ncvk7"]
 [ext_resource type="PackedScene" uid="uid://dum2pujhh1w4g" path="res://addons/maaacks_game_template/examples/scenes/windows/main_menu_options_window.tscn" id="3_4saoe"]
 [ext_resource type="PackedScene" uid="uid://c5pfkjxskjc60" path="res://addons/maaacks_game_template/examples/scenes/windows/main_menu_credits_window.tscn" id="4_801fg"]
+[ext_resource type="Texture2D" uid="uid://8vd13dbprjk0" path="res://assets/arts/Screenshot 2026-06-06 215907.png" id="5_801fg"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "Intro"
@@ -315,9 +316,12 @@ graph_offset = Vector2(-180.277, 49)
 
 [node name="MainMenu" unique_id=2084566378 instance=ExtResource("1_0i2sc")]
 script = ExtResource("2_ncvk7")
-game_scene_path = "res://addons/maaacks_game_template/examples/scenes/game_scene/game_ui.tscn"
+game_scene_path = "uid://cm2hjtnkudwgf"
 options_packed_scene = ExtResource("3_4saoe")
 credits_packed_scene = ExtResource("4_801fg")
+
+[node name="BackgroundTextureRect" parent="." index="0" unique_id=1025367827]
+texture = ExtResource("5_801fg")
 
 [node name="MenuAnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1108772180]
 libraries/ = SubResource("AnimationLibrary_2kqig")
@@ -330,6 +334,9 @@ parameters/conditions/intro_done = false
 [node name="TitleContainer" parent="MenuContainer/TitleMargin" parent_id_path=PackedInt32Array(1189822984) index="0" unique_id=704939549]
 modulate = Color(1, 1, 1, 0)
 
+[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0" unique_id=334107926]
+theme_override_colors/font_color = Color(0.26293245, 0.26293245, 0.26293245, 1)
+
 [node name="SubTitleContainer" parent="MenuContainer/SubTitleMargin" parent_id_path=PackedInt32Array(893436372) index="0" unique_id=523889664]
 modulate = Color(1, 1, 1, 0)
 
@@ -337,7 +344,18 @@ modulate = Color(1, 1, 1, 0)
 modulate = Color(1, 1, 1, 0)
 
 [node name="MenuButtonsBoxContainer" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer" index="0" unique_id=1691719897]
+anchors_preset = -1
+anchor_left = 0.07814844
+anchor_top = 0.40811965
+anchor_right = 0.126586
+anchor_bottom = 0.59188086
+offset_left = 0.0
+offset_top = 0.0
+offset_right = -1.5258789e-05
+offset_bottom = 0.0
+grow_horizontal = 1
 lock = true
+metadata/_edit_use_anchors_ = true
 
 [node name="VersionContainer" parent="VersionMargin" parent_id_path=PackedInt32Array(115503069) index="0" unique_id=645412385]
 modulate = Color(1, 1, 1, 0)

@@ -196,6 +196,3 @@ shape = SubResource("BoxShape3D_e5x1b")
 
 [node name="mango" parent="." unique_id=409418074 instance=ExtResource("15_yuhhg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5550747, 164.72714, 12.969887)
-
-[node name="mango2" parent="." unique_id=1474550873 instance=ExtResource("15_yuhhg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.498566, 5.045223, -5.3894835)

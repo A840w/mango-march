@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://blt1mmqv3bwmj"
 path.s3tc="res://.godot/imported/pine1_Tree_Branches_Roughness.png-78fad27d3624eea90f23847ca7d5e91f.s3tc.ctex"
+path.etc2="res://.godot/imported/pine1_Tree_Branches_Roughness.png-78fad27d3624eea90f23847ca7d5e91f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d assets/trees/pine1/pine1_Tree_Branches_Roughness.png"
-dest_files=["res://.godot/imported/pine1_Tree_Branches_Roughness.png-78fad27d3624eea90f23847ca7d5e91f.s3tc.ctex"]
+dest_files=["res://.godot/imported/pine1_Tree_Branches_Roughness.png-78fad27d3624eea90f23847ca7d5e91f.s3tc.ctex", "res://.godot/imported/pine1_Tree_Branches_Roughness.png-78fad27d3624eea90f23847ca7d5e91f.etc2.ctex"]
 
 [params]
 

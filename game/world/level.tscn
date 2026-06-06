@@ -14,13 +14,23 @@ sky = SubResource("Sky_jfmj3")
 tonemap_mode = 3
 fog_enabled = true
 fog_light_color = Color(0.6523004, 0.51144654, 0.49013233, 1)
-fog_sun_scatter = 0.09
-fog_density = 0.0634
-fog_aerial_perspective = 0.825
+fog_light_energy = 0.38
+fog_sun_scatter = 0.1
+fog_density = 0.02
+fog_aerial_perspective = 0.607
+fog_sky_affect = 0.758
+volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(0.82076836, 0.7213381, 0.78255385, 1)
 volumetric_fog_detail_spread = 1.319508
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7lr4m"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_ys1an"]
+exposure_sensitivity = 255.3
+exposure_multiplier = 0.573
+auto_exposure_enabled = true
+frustum_focus_distance = 573.11
+frustum_focal_length = 23.25
 
 [node name="level" type="Node3D" unique_id=932600529]
 
@@ -36,3 +46,17 @@ light_energy = 2.773
 shadow_enabled = true
 
 [node name="terrian" parent="." unique_id=531803863 instance=ExtResource("1_ys1an")]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=829489449]
+transform = Transform3D(0.8445525, 0.053190347, -0.5328244, -0.054073542, 0.9984393, 0.01396218, 0.5327354, 0.017019905, 0.84611064, 22.169, 16.706, 42.195)
+attributes = SubResource("CameraAttributesPhysical_ys1an")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1557154595]
+transform = Transform3D(0.4329163, -0.2825094, 0.8560209, -0.19757427, 0.89679396, 0.395885, -0.8795157, -0.3405128, 0.33242017, 45.773636, 15.678822, 7.1404963)
+spot_range = 38.956
+spot_attenuation = -1.43
+spot_angle = 36.810005
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1880244681]
+transform = Transform3D(-0.047691613, 0.16298735, 0.9854748, -0.15059863, 0.9741462, -0.16840187, -0.98744404, -0.1564425, -0.021912843, 39.15027, 7.4438944, 0)
+text = "climb!!"

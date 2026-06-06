@@ -7,10 +7,10 @@ extends CharacterBody3D
 @export var camera: Camera3D 
 @export var left_arm: SpringArm3D 
 @export var right_arm: SpringArm3D 
-@export var left_hand: Sprite3D  
-@export var right_hand: Sprite3D 
-@export var left_hand_collision: Area3D 
-@export var right_hand_collision: Area3D 
+@export var left: Sprite3D  
+@export var right: Sprite3D 
+@export var LHC: Area3D 
+@export var RHC: Area3D 
 @export var arm_pivot: Node3D
 @export var climb_pivot: Marker3D
 @export var ground_cast: RayCast3D
@@ -21,17 +21,22 @@ extends CharacterBody3D
 @export var grab_clang_sound_left: AudioStreamPlayer3D
 @export var grab_clang_sound_right: AudioStreamPlayer3D
 @export var DeathSound: AudioStreamPlayer
+@export var ambient_sound: AudioStreamPlayer
 
 @export_category("UI")
 @export var ui: CanvasLayer
 @export var HAND: Texture2D
-@export var HAND_GRAB: Texture2D
-@export var HAND_GRAB_VERTICAL : Texture2D
-@export var left_box: ColorRect
-@export var right_box: ColorRect
-@export var l_hand_icon: Label
-@export var r_hand_icon: Label
+@export var HG: Texture2D
+@export var HGV : Texture2D
+@export var LB: ColorRect
+@export var RB: ColorRect
+@export var l_icon: Label
+@export var r_icon: Label
+@export var black_screen: ColorRect
+@export var  death_window : OverlaidWindow
 
+
+var is_dying := false
 signal interaction_text_changed(text: String)
 
 var current_interaction_text := ""
@@ -53,14 +58,14 @@ const BASE_FOV = 70.0
 const FOV_CHANGE = 1.5
 
 const MAX_ARM_LENGTH = 1.26
-var left_hand_active: = false
-var right_hand_active: = false
-var left_hand_locked: = false
-var right_hand_locked: = false
-var left_hand_lock_pos: Vector3
-var right_hand_lock_pos: Vector3
-var keep_holding_left_hand: = false
-var keep_holding_right_hand: = false
+var left_active: = false
+var right_active: = false
+var left_locked: = false
+var right_locked: = false
+var left_lock_pos: Vector3
+var right_lock_pos: Vector3
+var keep_holding_left: = false
+var keep_holding_right: = false
 
 var no_ground_timer := 0.0
 
@@ -69,7 +74,7 @@ const CLIMB_SPEED: = 1.0
 var has_lost_grip: = false
 var default_climb_pivot_pos: = Vector3.ZERO
 const CLIMB_PIVOT_OFFSET: = Vector3(0.0, 0.6, 0.0)
-const CLIMB_HAND_DISTANCE_OFFSET: = Vector3(0.0, 0.0, 0.6)
+const CLIMB_DISTANCE_OFFSET: = Vector3(0.0, 0.0, 0.6)
 
 
 var falling_sound_playing: = false
@@ -106,7 +111,7 @@ var reload_camera_rotation
 var reload_harness_position: = Vector3.ZERO
 
 
-var unable_to_hold_hands: = false
+var unable_to_holds: = false
 
 var accepting_pause: = false
 
@@ -116,14 +121,21 @@ var was_on_floor: = false
 
 
 func _ready():
+	black_screen.visible = false
+	ambient_sound.play()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	
+	black_screen.modulate.a = 1.0
+	death_window.hide()
 
 	ui.show()
 	camera.current = true
 	can_control_at_all = true
 	default_climb_pivot_pos = climb_pivot.position
+
+	death_window.restart_pressed.connect(_on_restart_pressed)
+	death_window.main_menu_pressed.connect(_on_main_menu_pressed)
 
 	on_floor_grace_timer.timeout.connect( func(): was_on_floor = false)
 
@@ -131,29 +143,32 @@ func _input(event: InputEvent) -> void :
 	if event is InputEventMouseMotion and can_control_at_all != false:
 		camera_pivot.rotate_y( - event.relative.x * SENSITIVITY)
 
-		if left_hand_locked and right_hand_locked:
+		if left_locked and right_locked:
 			camera_pivot.rotation.y = clamp(camera_pivot.rotation.y, deg_to_rad(-85), deg_to_rad(85))
-		elif left_hand_locked and not right_hand_locked:
+		elif left_locked and not right_locked:
 			camera_pivot.rotation.y = clamp(camera_pivot.rotation.y, deg_to_rad(-165), deg_to_rad(85))
-		elif not left_hand_locked and right_hand_locked:
+		elif not left_locked and right_locked:
 			camera_pivot.rotation.y = clamp(camera_pivot.rotation.y, deg_to_rad(-85), deg_to_rad(165))
 
-		left_box.visible = (rad_to_deg(camera_pivot.rotation.y) >= 84.0 and left_hand_locked)
-		right_box.visible = (rad_to_deg(camera_pivot.rotation.y) <= -84.0 and right_hand_locked)
+		LB.visible = (rad_to_deg(camera_pivot.rotation.y) >= 84.0 and left_locked)
+		RB.visible = (rad_to_deg(camera_pivot.rotation.y) <= -84.0 and right_locked)
 
 
 		camera.rotate_x( - event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 
 	if event.is_action_pressed("pause") and accepting_pause:
-		keep_holding_left_hand = left_hand_locked
-		keep_holding_right_hand = right_hand_locked
+		keep_holding_left = left_locked
+		keep_holding_right = right_locked
 		# pause_game.emit()
+
+
+
 
 func _physics_process(delta: float) -> void :
 
 
-	if not is_on_floor() and not (left_hand_locked or right_hand_locked):
+	if not is_on_floor() and not (left_locked or right_locked):
 
 		velocity.y -= (gravity * delta)
 
@@ -205,7 +220,7 @@ func _physics_process(delta: float) -> void :
 	handle_climbing()
 
 
-	if not ground_cast.is_colliding():
+	if not ground_cast.is_colliding()  and velocity.y < 0 :
 		no_ground_timer += delta
 		print(no_ground_timer)
 
@@ -219,7 +234,7 @@ func _physics_process(delta: float) -> void :
 
 
 
-	if not has_lost_grip and not left_hand_locked and not right_hand_locked and not was_on_floor and not ground_cast.is_colliding():
+	if not has_lost_grip and not left_locked and not right_locked and not was_on_floor and not ground_cast.is_colliding():
 		var fall_direction: = (camera_pivot.transform.basis * Vector3(0.0, -1.0, 1.0)).normalized()
 		velocity += (fall_direction * 5.0)
 		has_lost_grip = true
@@ -241,9 +256,10 @@ func _physics_process(delta: float) -> void :
 		#EventBus.display_text.emit("", 0.0)
 		death_fall = true
 		hand_shake_time += delta * velocity.length()
-		left_hand.position += hand_shake(hand_shake_time)
-		right_hand.position += hand_shake(hand_shake_time)
+		left.position += hand_shake(hand_shake_time)
+		right.position += hand_shake(hand_shake_time)
 		ui.hide()
+		
 
 	if is_on_floor() and death_fall and not did_die:
 		death()
@@ -259,6 +275,8 @@ func _physics_process(delta: float) -> void :
 
 
 
+
+
 func handle_climbing():
 	if rad_to_deg(camera.rotation.x) < -30:
 		climb_pivot.position = default_climb_pivot_pos + CLIMB_PIVOT_OFFSET
@@ -267,16 +285,16 @@ func handle_climbing():
 
 	var climb_dir: = Vector3.ZERO
 	var climb_point: = Vector3.ZERO
-	if left_hand_locked and not right_hand_locked:
-		climb_point = left_hand_lock_pos
-	elif not left_hand_locked and right_hand_locked:
-		climb_point = right_hand_lock_pos
-	elif left_hand_locked and right_hand_locked:
-		climb_point.x = (left_hand_lock_pos.x + right_hand_lock_pos.x) / 2
-		climb_point.y = (left_hand_lock_pos.y + right_hand_lock_pos.y) / 2
-		climb_point.z = (left_hand_lock_pos.z + right_hand_lock_pos.z) / 2
+	if left_locked and not right_locked:
+		climb_point = left_lock_pos
+	elif not left_locked and right_locked:
+		climb_point = right_lock_pos
+	elif left_locked and right_locked:
+		climb_point.x = (left_lock_pos.x + right_lock_pos.x) / 2
+		climb_point.y = (left_lock_pos.y + right_lock_pos.y) / 2
+		climb_point.z = (left_lock_pos.z + right_lock_pos.z) / 2
 	if climb_point != Vector3.ZERO:
-		climb_point += CLIMB_HAND_DISTANCE_OFFSET
+		climb_point += CLIMB_DISTANCE_OFFSET
 		climb_dir = climb_pivot.global_position.direction_to(climb_point)
 		velocity = climb_dir * climb_pivot.global_position.distance_to(climb_point) * 2
 
@@ -308,84 +326,84 @@ func hand_shake(time) -> Vector3:
 	return pos
 
 func handle_arms(delta: float):
-	left_hand.global_position = lerp(left_hand.global_position, left_hand_collision.global_position, delta * 15)
-	right_hand.global_position = lerp(right_hand.global_position, right_hand_collision.global_position, delta * 15)
+	left.global_position = lerp(left.global_position, LHC.global_position, delta * 15)
+	right.global_position = lerp(right.global_position, RHC.global_position, delta * 15)
 
 	var is_holding_left = Input.is_action_pressed("LeftHand")
 	var is_holding_right = Input.is_action_pressed("RightHand")
-	if Input.is_action_pressed("LeftHand") and accepting_pause and keep_holding_left_hand:
-		keep_holding_left_hand = false
-		left_hand_locked = false
+	if Input.is_action_pressed("LeftHand") and accepting_pause and keep_holding_left:
+		keep_holding_left = false
+		left_locked = false
 
-	if Input.is_action_pressed("RightHand") and accepting_pause and keep_holding_right_hand:
-		keep_holding_right_hand = false
-		right_hand_locked = false
+	if Input.is_action_pressed("RightHand") and accepting_pause and keep_holding_right:
+		keep_holding_right = false
+		right_locked = false
 
 
 
-	if can_control_at_all == false or unable_to_hold_hands:
+	if can_control_at_all == false or unable_to_holds:
 		is_holding_left = false
 		is_holding_right = false
 
-	if keep_holding_left_hand: is_holding_left = keep_holding_left_hand
-	if keep_holding_right_hand: is_holding_right = keep_holding_right_hand
+	if keep_holding_left: is_holding_left = keep_holding_left
+	if keep_holding_right: is_holding_right = keep_holding_right
 
-	handle_individual_hand(Hands.LEFT, is_holding_left, delta)
-	handle_individual_hand(Hands.RIGHT, is_holding_right, delta)
+	handle_individual(Hands.LEFT, is_holding_left, delta)
+	handle_individual(Hands.RIGHT, is_holding_right, delta)
 
 
-func handle_individual_hand(which_hand: Hands, is_held: bool, delta: float):
+func handle_individual(which: Hands, is_held: bool, delta: float):
 	var locked
 	var lock_pos
 	var hand
 	var arm
 	var icon
 
-	match which_hand:
+	match which:
 		Hands.LEFT:
-			locked = left_hand_locked
-			lock_pos = left_hand_lock_pos
-			hand = left_hand
+			locked = left_locked
+			lock_pos = left_lock_pos
+			hand = left
 			arm = left_arm
-			icon = l_hand_icon
+			icon = l_icon
 		Hands.RIGHT:
-			locked = right_hand_locked
-			lock_pos = right_hand_lock_pos
-			hand = right_hand
+			locked = right_locked
+			lock_pos = right_lock_pos
+			hand = right
 			arm = right_arm
-			icon = r_hand_icon
+			icon = r_icon
 
 	if is_held:
-		match which_hand:
+		match which:
 			Hands.LEFT:
-				left_hand_active = true
-				left_hand_collision.monitoring = true
+				left_active = true
+				LHC.monitoring = true
 			Hands.RIGHT:
-				right_hand_active = true
-				right_hand_collision.monitoring = true
+				right_active = true
+				RHC.monitoring = true
 		if locked:
 			icon.modulate = icon_used_color
 			hand.global_position = lock_pos
 		else:
 			arm.spring_length = lerp(arm.spring_length, MAX_ARM_LENGTH, delta * 5)
 	else:
-		match which_hand:
+		match which:
 			Hands.LEFT:
-				left_hand_locked = false
-				left_hand_active = false
-				left_hand_collision.monitoring = false
+				left_locked = false
+				left_active = false
+				LHC.monitoring = false
 
-				if left_hand.texture != HAND:
-					left_hand.texture = HAND
+				if left.texture != HAND:
+					left.texture = HAND
 
 
 			Hands.RIGHT:
-				right_hand_locked = false
-				right_hand_active = false
-				right_hand_collision.monitoring = false
+				right_locked = false
+				right_active = false
+				RHC.monitoring = false
 
-				if right_hand.texture != HAND:
-					right_hand.texture = HAND
+				if right.texture != HAND:
+					right.texture = HAND
 
 
 
@@ -430,7 +448,7 @@ func handle_interaction(delta: float):
 					get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 
 			if collider.has_method("is_interacting"):
-				collider.is_interacting(left_hand_active, right_hand_active, delta)
+				collider.is_interacting(left_active, right_active, delta)
 
 	else:
 		if saved_view_collision:
@@ -438,28 +456,49 @@ func handle_interaction(delta: float):
 			saved_view_collision = null
 
 
-# func _on_left_hand_collision_body_entered(body: Node3D) -> void :
-# 	if left_hand_active and left_hand_locked == false and (body.is_in_group("ClimbableBranch") or body.is_in_group("ClimbableTree")) and velocity.length() < DEATH_VELOCITY_THRESHOLD:
+# func _on_LHC_body_entered(body: Node3D) -> void :
+# 	if left_active and left_locked == false and (body.is_in_group("ClimbableBranch") or body.is_in_group("ClimbableTree")) and velocity.length() < DEATH_VELOCITY_THRESHOLD:
 
-# 		left_hand_locked = true
-# 		left_hand_lock_pos = left_hand_collision.global_position
+# 		left_locked = true
+# 		left_lock_pos = LHC.global_position
 
 
 # 		has_lost_grip = false
 
 # 		if body.is_in_group("ClimbableBranch"):
-# 			left_hand.texture = HAND_GRAB
+# 			left.texture = HG
 # 		if body.is_in_group("ClimbableTree"):
-# 			left_hand.texture = HAND_GRAB_VERTICAL
+# 			left.texture = HGV
 
 		#grab_clang_sound_left.play()
 
 func death():
-	#EventBus.player_death.emit()
+
+	if is_dying:
+		return
+
+	is_dying = true
+
 	can_control_at_all = false
 	did_die = true
+	ambient_sound.stop()
 	DeathSound.play()
+	black_screen.visible = true
 	ui.hide()
+
+	var tween := create_tween()
+
+	tween.tween_property(
+		black_screen,
+		"modulate:a",
+		1.0,
+		1.5
+	)
+
+	await tween.finished
+
+	death_window.show()
+
 
 
 func end_game():
@@ -468,35 +507,47 @@ func end_game():
 	ui.hide()
 
 
-func _on_right_handcollison_body_entered(body: Node3D) -> void:
-	if right_hand_active and right_hand_locked == false and (body.is_in_group("ClimbableBranch") or body.is_in_group("ClimbableTree")) and velocity.length() < DEATH_VELOCITY_THRESHOLD:
+func _on_rightcollison_body_entered(body: Node3D) -> void:
+	if right_active and right_locked == false and (body.is_in_group("ClimbableBranch") or body.is_in_group("ClimbableTree")) and velocity.length() < DEATH_VELOCITY_THRESHOLD:
 
-		right_hand_locked = true
-		right_hand_lock_pos = right_hand_collision.global_position
+		right_locked = true
+		right_lock_pos = RHC.global_position
 
 
 		has_lost_grip = false
 
 		if body.is_in_group("ClimbableBranch"):
-			right_hand.texture = HAND_GRAB
+			right.texture = HG
 		elif body.is_in_group("ClimbableTree"):
-			right_hand.texture = HAND_GRAB_VERTICAL
+			right.texture = HGV
 
 		grab_clang_sound_right.play()
 
 
-func _on_left_handcollison_body_entered(body: Node3D) -> void:
-	if left_hand_active and left_hand_locked == false and (body.is_in_group("ClimbableBranch") or body.is_in_group("ClimbableTree")) and velocity.length() < DEATH_VELOCITY_THRESHOLD:
+func _on_leftcollison_body_entered(body: Node3D) -> void:
+	if left_active and left_locked == false and (body.is_in_group("ClimbableBranch") or body.is_in_group("ClimbableTree")) and velocity.length() < DEATH_VELOCITY_THRESHOLD:
 
-		left_hand_locked = true
-		left_hand_lock_pos = left_hand_collision.global_position
+		left_locked = true
+		left_lock_pos = LHC.global_position
 
 
 		has_lost_grip = false
 
 		if body.is_in_group("ClimbableBranch"):
-			left_hand.texture = HAND_GRAB
+			left.texture = HG
 		if body.is_in_group("ClimbableTree"):
-			left_hand.texture = HAND_GRAB_VERTICAL
+			left.texture = HGV
 
 		grab_clang_sound_left.play()
+
+
+func _on_restart_pressed():
+	get_tree().reload_current_scene()
+
+func _on_main_menu_pressed():
+	get_tree().change_scene_to_file(
+		"res://addons/maaacks_game_template/examples/scenes/menus/main_menu/main_menu.tscn"
+	)
+
+
+	

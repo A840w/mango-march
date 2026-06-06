@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://34bbw2ln4s3y"
 path.bptc="res://.godot/imported/sunset_fairway_2k.exr-cb99db3fd9ec48575940c213591f4d72.bptc.ctex"
+path.astc="res://.godot/imported/sunset_fairway_2k.exr-cb99db3fd9ec48575940c213591f4d72.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/enviroments/sunset_fairway_2k.exr"
-dest_files=["res://.godot/imported/sunset_fairway_2k.exr-cb99db3fd9ec48575940c213591f4d72.bptc.ctex"]
+dest_files=["res://.godot/imported/sunset_fairway_2k.exr-cb99db3fd9ec48575940c213591f4d72.bptc.ctex", "res://.godot/imported/sunset_fairway_2k.exr-cb99db3fd9ec48575940c213591f4d72.astc.ctex"]
 
 [params]
 

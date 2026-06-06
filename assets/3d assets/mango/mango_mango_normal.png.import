@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://rlqgu75qp1br"
 path.s3tc="res://.godot/imported/mango_mango_normal.png-465c5df1091159eae6cf39a8eabe3449.s3tc.ctex"
+path.etc2="res://.godot/imported/mango_mango_normal.png-465c5df1091159eae6cf39a8eabe3449.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d assets/mango/mango_mango_normal.png"
-dest_files=["res://.godot/imported/mango_mango_normal.png-465c5df1091159eae6cf39a8eabe3449.s3tc.ctex"]
+dest_files=["res://.godot/imported/mango_mango_normal.png-465c5df1091159eae6cf39a8eabe3449.s3tc.ctex", "res://.godot/imported/mango_mango_normal.png-465c5df1091159eae6cf39a8eabe3449.etc2.ctex"]
 
 [params]
 
