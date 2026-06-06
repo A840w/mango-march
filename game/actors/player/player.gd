@@ -32,6 +32,9 @@ extends CharacterBody3D
 @export var l_hand_icon: Label
 @export var r_hand_icon: Label
 
+signal interaction_text_changed(text: String)
+
+var current_interaction_text := ""
 
 enum Hands{LEFT, RIGHT}
 
@@ -59,6 +62,7 @@ var right_hand_lock_pos: Vector3
 var keep_holding_left_hand: = false
 var keep_holding_right_hand: = false
 
+var no_ground_timer := 0.0
 
 
 const CLIMB_SPEED: = 1.0
@@ -200,6 +204,21 @@ func _physics_process(delta: float) -> void :
 	handle_arms(delta)
 	handle_climbing()
 
+
+	if not ground_cast.is_colliding():
+		no_ground_timer += delta
+		print(no_ground_timer)
+
+		if no_ground_timer >= 6.0:
+			death()
+			print("Player has died from falling out of the world.")
+	else:
+			no_ground_timer = 0.0
+
+
+
+
+
 	if not has_lost_grip and not left_hand_locked and not right_hand_locked and not was_on_floor and not ground_cast.is_colliding():
 		var fall_direction: = (camera_pivot.transform.basis * Vector3(0.0, -1.0, 1.0)).normalized()
 		velocity += (fall_direction * 5.0)
@@ -260,6 +279,14 @@ func handle_climbing():
 		climb_point += CLIMB_HAND_DISTANCE_OFFSET
 		climb_dir = climb_pivot.global_position.direction_to(climb_point)
 		velocity = climb_dir * climb_pivot.global_position.distance_to(climb_point) * 2
+
+
+func set_interaction_text(text: String):
+	if current_interaction_text == text:
+		return
+
+	current_interaction_text = text
+	interaction_text_changed.emit(text)
 
 
 func headbob(time, is_harness: bool) -> Vector3:
@@ -377,26 +404,33 @@ func handle_interaction(delta: float):
 			saved_view_collision = null
 
 		# if collider is ThreatSightBox:
-		#     collider.in_player_view = true
-		#     saved_view_collision = collider
-		#     return
+		# 	collider.in_player_view = true
+		# 	saved_view_collision = collider
+		# 	return
 
 		if collider != null:
 			if "in_player_view" in collider:
 				saved_view_collision = collider
 				collider.in_player_view = true
 
-			if not left_hand_locked: left_hand.no_depth_test = left_hand_active
-			if not right_hand_locked: right_hand.no_depth_test = right_hand_active
+			# Mango interaction
+			if collider.is_in_group("mango"):
+				set_interaction_text("Press E to pick mango")
 
-			# if collider.has_method("is_interacting"):
-			#     if harness.visible:
-			#         collider.is_interacting(left_hand_active, right_hand_active, delta)
-			#     else:
-			#         EventBus.display_text.emit("I should harness myself before I begin the inspection", 3.0)
-			# if "night_time" in collider:
-			#     if collider.night_time:
-			#         EventBus.display_text.emit("My work is done. I should go.", 3.0)
+				if Input.is_action_just_pressed("interact"):
+					if collider.has_method("pickup"):
+						collider.pickup()
+
+			# Special Mango interaction
+			elif collider.is_in_group("special_mango"):
+				set_interaction_text("Press E to pick the golden mango")
+
+				if Input.is_action_just_pressed("interact"):
+					# End game / Win condition
+					get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
+
+			if collider.has_method("is_interacting"):
+				collider.is_interacting(left_hand_active, right_hand_active, delta)
 
 	else:
 		if saved_view_collision:
@@ -426,6 +460,7 @@ func death():
 	did_die = true
 	DeathSound.play()
 	ui.hide()
+
 
 func end_game():
 	can_control_at_all = false

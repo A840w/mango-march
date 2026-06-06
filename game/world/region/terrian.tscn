@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cx82cerxue5k" path="res://assets/arts/terrian/01/grass_4_chnnelpkd_nrm.png" id="10_m3bgh"]
 [ext_resource type="PackedScene" uid="uid://dw37afh0ehhl1" path="res://game/data/prefabs/mango_tree.tscn" id="14_e5x1b"]
 [ext_resource type="PackedScene" uid="uid://k8jw3vk7y4kh" path="res://game/data/prefabs/pine_2.tscn" id="15_7j8hc"]
+[ext_resource type="PackedScene" uid="uid://dcvx0oq446nm7" path="res://game/data/prefabs/mango.tscn" id="15_yuhhg"]
 
 [sub_resource type="Gradient" id="Gradient_7guqr"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -192,3 +193,9 @@ shape = SubResource("BoxShape3D_e5x1b")
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="barrier/StaticBody3D" unique_id=236316407]
 transform = Transform3D(0.8480572, 0, -0.52990437, 0, 1, 0, 0.52990437, 0, 0.8480572, 84.51262, 13.503234, 6.240476)
 shape = SubResource("BoxShape3D_e5x1b")
+
+[node name="mango" parent="." unique_id=409418074 instance=ExtResource("15_yuhhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5550747, 164.72714, 12.969887)
+
+[node name="mango2" parent="." unique_id=1474550873 instance=ExtResource("15_yuhhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.498566, 5.045223, -5.3894835)

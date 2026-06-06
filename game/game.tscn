@@ -14,6 +14,8 @@ shader_parameter/effect_amount = 1.0
 
 [node name="level" parent="levels" unique_id=932600529 instance=ExtResource("1_l1rk1")]
 
+[node name="grian" type="CanvasLayer" parent="." unique_id=1362674576]
+
 [node name="figheye" type="CanvasLayer" parent="." unique_id=363298787]
 
 [node name="ColorRect" type="ColorRect" parent="figheye" unique_id=808125608]

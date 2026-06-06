@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dylgurbku4mfv" path="res://game/actors/player/player.gd" id="1_em52k"]
 [ext_resource type="Texture2D" uid="uid://df2oaattmymow" path="res://assets/arts/player/sprite/hands_grab.png" id="3_p81wk"]
 [ext_resource type="Texture2D" uid="uid://c0q3elax8ulv0" path="res://assets/arts/player/sprite/hands_grab_22.png" id="4_m3o3f"]
+[ext_resource type="Script" uid="uid://bqsqh3s72cph3" path="res://game/actors/player/label.gd" id="5_iuwj5"]
 [ext_resource type="AudioStream" uid="uid://dyuofmxg510u6" path="res://assets/audio/footstep/grass/2.ogg" id="5_j5vpa"]
 [ext_resource type="AudioStream" uid="uid://ccdrxdvu2dg7a" path="res://assets/audio/footstep/grass/5.ogg" id="6_hlqpx"]
 [ext_resource type="AudioStream" uid="uid://deuhdvnwxs2ei" path="res://assets/audio/footstep/grass/6.ogg" id="7_oawdx"]
@@ -162,6 +163,15 @@ scale = Vector2(3, 3)
 text = "R"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UI" unique_id=252506449]
+anchors_preset = -1
+anchor_left = 0.36458334
+anchor_top = 0.78858024
+anchor_right = 0.640625
+anchor_bottom = 0.8240741
+script = ExtResource("5_iuwj5")
 metadata/_edit_use_anchors_ = true
 
 [node name="Gracetimer" type="Timer" parent="." unique_id=1062355669]
