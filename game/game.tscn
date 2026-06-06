@@ -28,5 +28,5 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="player" parent="figheye" unique_id=489851307 instance=ExtResource("2_vasa2")]
+[node name="player" parent="." unique_id=489851307 instance=ExtResource("2_vasa2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.423615, 9.966648, -15.11419)

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dcvx0oq446nm7"]
 
 [ext_resource type="Texture2D" uid="uid://4son1i03upgr" path="res://assets/3d assets/mango/mango_mango_color.png" id="1_bafsp"]
+[ext_resource type="Script" uid="uid://cq4cx55u6lm4g" path="res://game/systems/components/mango.gd" id="1_xerph"]
 [ext_resource type="Texture2D" uid="uid://dx13jt4mjaj8c" path="res://assets/3d assets/mango/mango_mango_roughness.png" id="2_xerph"]
 [ext_resource type="Texture2D" uid="uid://rlqgu75qp1br" path="res://assets/3d assets/mango/mango_mango_normal.png" id="3_gqhhr"]
 
@@ -83,7 +84,8 @@ shadow_mesh = SubResource("ArrayMesh_10673")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_bafsp"]
 
-[node name="mango" type="StaticBody3D" unique_id=409418074]
+[node name="mango" type="StaticBody3D" unique_id=409418074 groups=["mango"]]
+script = ExtResource("1_xerph")
 
 [node name="mango" type="MeshInstance3D" parent="." unique_id=996152703]
 mesh = SubResource("ArrayMesh_qef7y")
