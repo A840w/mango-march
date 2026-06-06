@@ -2,40 +2,82 @@
 
 [ext_resource type="Texture2D" uid="uid://716fx0vgp303" path="res://assets/arts/player/sprite/hands3.png" id="1_c7hf2"]
 [ext_resource type="Script" uid="uid://dylgurbku4mfv" path="res://game/actors/player/player.gd" id="1_em52k"]
-[ext_resource type="Script" uid="uid://051yx3ra65qe" path="res://game/systems/components/component.gd" id="2_28fbu"]
-[ext_resource type="Script" uid="uid://deo84loi2kfbk" path="res://game/actors/player/camera_controller.gd" id="2_m3o3f"]
-[ext_resource type="Script" uid="uid://chxbube3gdh16" path="res://game/systems/components/mouse_capture_component.gd" id="4_p81wk"]
+[ext_resource type="Texture2D" uid="uid://df2oaattmymow" path="res://assets/arts/player/sprite/hands_grab.png" id="3_p81wk"]
+[ext_resource type="Texture2D" uid="uid://c0q3elax8ulv0" path="res://assets/arts/player/sprite/hands_grab_22.png" id="4_m3o3f"]
+[ext_resource type="AudioStream" uid="uid://dyuofmxg510u6" path="res://assets/audio/footstep/grass/2.ogg" id="5_j5vpa"]
+[ext_resource type="AudioStream" uid="uid://ccdrxdvu2dg7a" path="res://assets/audio/footstep/grass/5.ogg" id="6_hlqpx"]
+[ext_resource type="AudioStream" uid="uid://deuhdvnwxs2ei" path="res://assets/audio/footstep/grass/6.ogg" id="7_oawdx"]
+[ext_resource type="AudioStream" uid="uid://c8tlgatx7kju1" path="res://assets/audio/footstep/wind/tree_falling.ogg" id="8_hlqpx"]
+[ext_resource type="AudioStream" uid="uid://naep2ohk8vsw" path="res://assets/audio/ledge2.ogg" id="9_oawdx"]
+[ext_resource type="AudioStream" uid="uid://b8iaxygsfran6" path="res://assets/audio/impactfall1.ogg" id="10_tiye0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2w0hk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c7hf2"]
-size = Vector3(1.0899482, 0.43584716, 0.36755738)
+size = Vector3(0.999, 0.98, 0.368)
 
-[node name="player" type="CharacterBody3D" unique_id=489851307 node_paths=PackedStringArray("camera", "standing_collision") groups=["player"]]
+[sub_resource type="SphereShape3D" id="SphereShape3D_p81wk"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tiye0"]
+streams_count = 3
+stream_0/stream = ExtResource("5_j5vpa")
+stream_1/stream = ExtResource("6_hlqpx")
+stream_2/stream = ExtResource("7_oawdx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_iuwj5"]
+streams_count = 1
+stream_0/stream = ExtResource("9_oawdx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oawdx"]
+streams_count = 1
+stream_0/stream = ExtResource("9_oawdx")
+
+[node name="player" type="CharacterBody3D" unique_id=489851307 node_paths=PackedStringArray("camera_pivot", "camera", "left_arm", "right_arm", "left_hand", "right_hand", "left_hand_collision", "right_hand_collision", "arm_pivot", "climb_pivot", "ground_cast", "view_raycast", "footstep_sound", "falling_wind_sound", "grab_clang_sound_left", "grab_clang_sound_right", "DeathSound", "ui", "left_box", "right_box", "l_hand_icon", "r_hand_icon", "on_floor_grace_timer") groups=["player"]]
 script = ExtResource("1_em52k")
+camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
-standing_collision = NodePath("StandingCollison")
+left_arm = NodePath("CameraPivot/Camera3D/ArmP/LeftArm")
+right_arm = NodePath("CameraPivot/Camera3D/ArmP/RightArm")
+left_hand = NodePath("CameraPivot/Camera3D/LeftHand")
+right_hand = NodePath("CameraPivot/Camera3D/RightHand")
+left_hand_collision = NodePath("CameraPivot/Camera3D/ArmP/LeftArm/LeftHandcollison")
+right_hand_collision = NodePath("CameraPivot/Camera3D/ArmP/RightArm/RightHandcollison")
+arm_pivot = NodePath("CameraPivot/Camera3D/ArmP")
+climb_pivot = NodePath("camerap")
+ground_cast = NodePath("CameraPivot/Camera3D/ArmP/RayCast3D")
+view_raycast = NodePath("CameraPivot/Camera3D/ArmP/RayCast3D")
+footstep_sound = NodePath("AudioStreamPlayer3D")
+falling_wind_sound = NodePath("AudioStreamPlayer")
+grab_clang_sound_left = NodePath("cslh")
+grab_clang_sound_right = NodePath("csrh")
+DeathSound = NodePath("death")
+ui = NodePath("UI")
+HAND = ExtResource("1_c7hf2")
+HAND_GRAB = ExtResource("3_p81wk")
+HAND_GRAB_VERTICAL = ExtResource("4_m3o3f")
+left_box = NodePath("UI/LeftBox")
+right_box = NodePath("UI/RightBox")
+l_hand_icon = NodePath("UI/Lhandicon")
+r_hand_icon = NodePath("UI/Rhandicon")
+on_floor_grace_timer = NodePath("Gracetimer")
 
 [node name="StandingCollison" type="CollisionShape3D" parent="." unique_id=1033842879]
 shape = SubResource("CapsuleShape3D_2w0hk")
 
-[node name="CameraPivot" type="Node3D" parent="." unique_id=413159835 node_paths=PackedStringArray("player_controller", "component_mouse_capture")]
+[node name="CameraPivot" type="Node3D" parent="." unique_id=413159835]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77873236, 0)
-script = ExtResource("2_m3o3f")
-player_controller = NodePath("..")
-component_mouse_capture = NodePath("../components/MouseCaptureComponent")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1239620514]
 fov = 72.61815
 
 [node name="RightHand" type="Sprite3D" parent="CameraPivot/Camera3D" unique_id=553526834]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.3120113, -0.24686307, -0.374663)
+transform = Transform3D(-0.10368897, 0.008261774, -0.05983594, -0.008104146, 0.11589471, 0.0300456, 0.05985749, 0.030002639, -0.09958374, 0.30220833, -0.27145135, -0.374663)
 billboard = 1
 no_depth_test = true
 texture = ExtResource("1_c7hf2")
 
 [node name="LeftHand" type="Sprite3D" parent="CameraPivot/Camera3D" unique_id=923656666]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.26217994, -0.24686307, -0.38242233)
+transform = Transform3D(-0.10153005, 0.022612086, 0.05983594, 0.008104146, 0.11589471, -0.0300456, -0.06345052, -0.021380102, -0.09958374, -0.2719829, -0.27145135, -0.38242233)
 flip_h = true
 billboard = 1
 no_depth_test = true
@@ -44,25 +86,23 @@ texture = ExtResource("1_c7hf2")
 [node name="ArmP" type="Node3D" parent="CameraPivot/Camera3D" unique_id=958870781]
 
 [node name="RightArm" type="SpringArm3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1676185195]
-transform = Transform3D(1, 0, 0, 0, 0.9885308, -0.15101929, 0, 0.15101929, 0.9885308, 0.42338762, -0.25358254, -0.3701537)
-spring_length = -1.0
+transform = Transform3D(-0.99529034, -0.047722153, -0.084379524, -0.06753456, 0.9657893, 0.25038, 0.069544174, 0.25489932, -0.9644636, 0.42338762, -0.25358254, -0.3701537)
 
 [node name="RightHandcollison" type="Area3D" parent="CameraPivot/Camera3D/ArmP/RightArm" unique_id=1771413883]
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/ArmP/RightArm/RightHandcollison" unique_id=982821165]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, -7.450581e-09, 0, 7.450581e-09, 0.1, -0.03507954, -0.0042077005, 0.0051219463)
+transform = Transform3D(0.1, -2.7008355e-08, 9.313226e-10, 2.3283064e-10, 0.10000004, -9.313226e-09, 0, 6.7055225e-08, 0.09999997, 0.008887023, -0.0042077005, 0.0051218867)
 shape = SubResource("BoxShape3D_c7hf2")
 
-[node name="RightArm2" type="SpringArm3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1574398937]
-transform = Transform3D(1, 0, 0, 0, 0.9885308, -0.15101929, 0, 0.15101929, 0.9885308, -0.29011503, -0.25358254, -0.3701537)
-spring_length = -1.0
+[node name="LeftArm" type="SpringArm3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1574398937]
+transform = Transform3D(-0.99224585, -0.091259904, 0.084379524, -0.06753456, 0.9657893, 0.25038, -0.1043425, 0.24273999, -0.9644636, -0.29011503, -0.25358254, -0.3701537)
 
-[node name="RightHandcollison" type="Area3D" parent="CameraPivot/Camera3D/ArmP/RightArm2" unique_id=271348346]
+[node name="LeftHandcollison" type="Area3D" parent="CameraPivot/Camera3D/ArmP/LeftArm" unique_id=271348346]
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/ArmP/RightArm2/RightHandcollison" unique_id=266434284]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, -7.450581e-09, 0, 7.450581e-09, 0.1, -0.03507954, -0.0042077005, 0.0051219463)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/ArmP/LeftArm/LeftHandcollison" unique_id=266434284]
+transform = Transform3D(0.1000001, 0, -6.519258e-09, 4.4237822e-09, 0.1, -9.313226e-09, -1.3969839e-08, 7.450581e-09, 0.09999997, -0.016468585, 0.005521387, 0.005121857)
 shape = SubResource("BoxShape3D_c7hf2")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1633568317]
@@ -74,10 +114,75 @@ target_position = Vector3(0, 0, -1.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [node name="camerap" type="Marker3D" parent="." unique_id=540068442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72559255, 0)
 
-[node name="components" type="Node" parent="." unique_id=1969130596]
-script = ExtResource("2_28fbu")
+[node name="UI" type="CanvasLayer" parent="." unique_id=1475582609]
 
-[node name="MouseCaptureComponent" type="Node" parent="components" unique_id=1138865942]
-script = ExtResource("4_p81wk")
-debug = true
+[node name="LeftBox" type="ColorRect" parent="UI" unique_id=197385616]
+anchors_preset = -1
+anchor_left = 0.004340278
+anchor_top = 0.0061728396
+anchor_right = 0.0390625
+anchor_bottom = 0.9876543
+color = Color(0.22670749, 0.22670749, 0.22670746, 0.68235296)
+metadata/_edit_use_anchors_ = true
+
+[node name="RightBox" type="ColorRect" parent="UI" unique_id=773615921]
+anchors_preset = -1
+anchor_left = 0.9609375
+anchor_top = 0.0015432099
+anchor_right = 0.9956597
+anchor_bottom = 0.9830247
+color = Color(0.22670749, 0.22670749, 0.22670746, 0.68235296)
+metadata/_edit_use_anchors_ = true
+
+[node name="Lhandicon" type="Label" parent="UI" unique_id=683454253]
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.035
+offset_left = 2.000002
+offset_top = 479.0
+offset_right = -23.653334
+offset_bottom = 479.32
+scale = Vector2(3, 3)
+text = "L"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rhandicon" type="Label" parent="UI" unique_id=77020033]
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.035
+offset_left = 1105.0
+offset_top = 479.0
+offset_right = 1079.3467
+offset_bottom = 479.32
+scale = Vector2(3, 3)
+text = "R"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gracetimer" type="Timer" parent="." unique_id=1062355669]
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=201240415]
+shape = SubResource("SphereShape3D_p81wk")
+target_position = Vector3(0, -2, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=956312277]
+stream = SubResource("AudioStreamRandomizer_tiye0")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=245473617]
+stream = ExtResource("8_hlqpx")
+
+[node name="cslh" type="AudioStreamPlayer3D" parent="." unique_id=1961079278]
+stream = SubResource("AudioStreamRandomizer_iuwj5")
+
+[node name="csrh" type="AudioStreamPlayer3D" parent="." unique_id=395046875]
+stream = SubResource("AudioStreamRandomizer_oawdx")
+volume_db = -3.0
+
+[node name="death" type="AudioStreamPlayer" parent="." unique_id=289946286]
+stream = ExtResource("10_tiye0")
+
+[connection signal="body_entered" from="CameraPivot/Camera3D/ArmP/RightArm/RightHandcollison" to="." method="_on_right_handcollison_body_entered"]
+[connection signal="body_entered" from="CameraPivot/Camera3D/ArmP/LeftArm/LeftHandcollison" to="." method="_on_left_handcollison_body_entered"]

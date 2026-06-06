@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://r1niw4vutqt2"]
 
+[ext_resource type="PackedScene" uid="uid://cs8ce5xfopmys" path="res://game/data/prefabs/fern.tscn" id="1_dtrqk"]
 [ext_resource type="Texture2D" uid="uid://c3pn86huqm4ht" path="res://assets/arts/terrian/01/grass_12_chnnelpkd.png" id="1_md0o6"]
 [ext_resource type="Texture2D" uid="uid://bm2fuauvdmiwo" path="res://assets/arts/terrian/01/grass_12_chnnelpkd_Nrm.png" id="2_woysr"]
+[ext_resource type="PackedScene" uid="uid://bfags0ht6sr4a" path="res://game/data/prefabs/pine_1.tscn" id="2_yuhhg"]
 [ext_resource type="Texture2D" uid="uid://xm4acalwqqiw" path="res://assets/arts/terrian/01/grass_11_chnnelpkd.png" id="3_88ae5"]
 [ext_resource type="Texture2D" uid="uid://bopd22h1ewpuw" path="res://assets/arts/terrian/01/grass_11_chnnelpkd_nrm.png" id="4_n1jro"]
 [ext_resource type="Texture2D" uid="uid://cokan3vciah26" path="res://assets/arts/terrian/01/grass_2_chnnelpkd.png" id="5_ci7ac"]
@@ -11,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://caetn3vc8qcrn" path="res://assets/arts/terrian/01/grass_4_chnnelpkd.png" id="9_5eft3"]
 [ext_resource type="Texture2D" uid="uid://cx82cerxue5k" path="res://assets/arts/terrian/01/grass_4_chnnelpkd_nrm.png" id="10_m3bgh"]
 [ext_resource type="PackedScene" uid="uid://c360x350e8oag" path="res://game/actors/player/player.tscn" id="11_m3bgh"]
+[ext_resource type="Script" uid="uid://cyh0d64pfygbl" path="res://addons/maaacks_game_template/base/nodes/utilities/pause_menu_controller.gd" id="12_jfmj3"]
+[ext_resource type="PackedScene" uid="uid://bpphyypwqyoyl" path="res://addons/maaacks_game_template/examples/scenes/windows/pause_menu.tscn" id="13_5ght3"]
+[ext_resource type="PackedScene" uid="uid://dw37afh0ehhl1" path="res://game/data/prefabs/mango_tree.tscn" id="14_e5x1b"]
+[ext_resource type="PackedScene" uid="uid://k8jw3vk7y4kh" path="res://game/data/prefabs/pine_2.tscn" id="15_7j8hc"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_m3bgh"]
 mie_color = Color(0.79193276, 0.5271681, 0.35003835, 1)
@@ -22,6 +28,7 @@ sky_material = SubResource("PhysicalSkyMaterial_m3bgh")
 background_mode = 2
 sky = SubResource("Sky_jfmj3")
 tonemap_mode = 3
+fog_enabled = true
 fog_light_color = Color(0.6523004, 0.51144654, 0.49013233, 1)
 fog_sun_scatter = 0.09
 fog_density = 0.0683
@@ -73,23 +80,34 @@ _shader_parameters = {
 }
 world_background = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88ae5"]
-transparency = 4
-cull_mode = 2
-vertex_color_use_as_albedo = true
-backlight_enabled = true
-backlight = Color(0.5, 0.5, 0.5, 1)
-distance_fade_mode = 1
-distance_fade_min_distance = 128.0
-distance_fade_max_distance = 96.0
-
 [sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_n1jro"]
-generated_type = 1
-height_offset = 0.5
-material_override = SubResource("StandardMaterial3D_88ae5")
+name = "fern"
+scene_file = ExtResource("1_dtrqk")
+density = 0.5271537
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 128.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_7j8hc"]
+name = "pine_2"
+id = 1
+scene_file = ExtResource("15_7j8hc")
+height_offset = -0.84
+density = 0.47
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 430.7
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_dtrqk"]
+name = "pine_1"
+id = 2
+scene_file = ExtResource("2_yuhhg")
+height_offset = -1.85
+density = 0.081907146
+last_lod = 1
+last_shadow_lod = 1
+lod0_range = 0.0
+lod1_range = 308.1
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_88ae5"]
 name = "grass_12"
@@ -145,13 +163,13 @@ detiling_rotation = 0.065
 detiling_shift = 0.088
 
 [sub_resource type="Terrain3DAssets" id="Terrain3DAssets_ci7ac"]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_n1jro")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_n1jro"), SubResource("Terrain3DMeshAsset_7j8hc"), SubResource("Terrain3DMeshAsset_dtrqk")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_88ae5"), SubResource("Terrain3DTextureAsset_ci7ac"), SubResource("Terrain3DTextureAsset_w3yiw"), SubResource("Terrain3DTextureAsset_5eft3"), SubResource("Terrain3DTextureAsset_jfmj3")])
 
 [node name="terrian" type="Node3D" unique_id=531803863]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1528475928]
-transform = Transform3D(-0.8660253, -0.19536565, 0.4602525, 0.3986393, 0.28584185, 0.8714247, -0.301806, 0.9381509, -0.16966584, 0, 0, 4.501995)
+transform = Transform3D(-0.86602545, -0.19536573, 0.46025243, -0.1342163, 0.9775539, 0.16240183, -0.48164928, 0.078870475, -0.8728078, 0, 0, 4.501995)
 light_intensity_lux = 69836.11
 light_temperature = 4603.0
 light_energy = 2.773
@@ -169,4 +187,17 @@ top_level = true
 metadata/_edit_lock_ = true
 
 [node name="player" parent="." unique_id=489851307 instance=ExtResource("11_m3bgh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.62389, 111.90202, 3.234146)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.94053, 6.462224, 3.234146)
+
+[node name="Control" type="Control" parent="." unique_id=1017538042]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseMenuController" type="Node" parent="Control" unique_id=930772944]
+script = ExtResource("12_jfmj3")
+pause_menu_packed = ExtResource("13_5ght3")
+
+[node name="mango_tree" parent="." unique_id=760389340 instance=ExtResource("14_e5x1b")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 36.848045, 0, 1.9699335)

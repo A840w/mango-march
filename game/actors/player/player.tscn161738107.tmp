@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://c360x350e8oag"]
+
+[ext_resource type="Texture2D" uid="uid://716fx0vgp303" path="res://assets/arts/player/sprite/hands3.png" id="1_c7hf2"]
+[ext_resource type="Script" uid="uid://dylgurbku4mfv" path="res://game/actors/player/player.gd" id="1_em52k"]
+[ext_resource type="Script" uid="uid://051yx3ra65qe" path="res://game/systems/components/component.gd" id="2_28fbu"]
+[ext_resource type="Texture2D" uid="uid://df2oaattmymow" path="res://assets/arts/player/sprite/hands_grab.png" id="2_pqla1"]
+[ext_resource type="Script" uid="uid://cck8n0dc4kgvo" path="res://game/systems/components/climbing_component.gd" id="5_climb"]
+[ext_resource type="Script" uid="uid://bn44uc670loen" path="res://game/systems/components/hand_arm_component.gd" id="6_hand"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2w0hk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c7hf2"]
+size = Vector3(1.0899482, 0.43584716, 0.36755738)
+
+[node name="player" type="CharacterBody3D" unique_id=489851307 node_paths=PackedStringArray("camera_pivot", "camera", "climbing_component") groups=["player"]]
+script = ExtResource("1_em52k")
+camera_pivot = NodePath("CameraPivot")
+camera = NodePath("CameraPivot/Camera3D")
+climbing_component = NodePath("components/ClimbingComponent")
+
+[node name="StandingCollison" type="CollisionShape3D" parent="." unique_id=1033842879]
+shape = SubResource("CapsuleShape3D_2w0hk")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=413159835]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77873236, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1239620514]
+fov = 72.61815
+
+[node name="RightHand" type="Sprite3D" parent="CameraPivot/Camera3D" unique_id=553526834]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.3120113, -0.24686307, -0.374663)
+billboard = 1
+no_depth_test = true
+texture = ExtResource("1_c7hf2")
+
+[node name="LeftHand" type="Sprite3D" parent="CameraPivot/Camera3D" unique_id=923656666]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.26217994, -0.24686307, -0.38242233)
+flip_h = true
+billboard = 1
+no_depth_test = true
+texture = ExtResource("1_c7hf2")
+
+[node name="ArmP" type="Node3D" parent="CameraPivot/Camera3D" unique_id=958870781]
+
+[node name="RightArm" type="SpringArm3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1676185195]
+transform = Transform3D(1, 0, 0, 0, 0.9885308, -0.15101929, 0, 0.15101929, 0.9885308, 0.42338762, -0.25358254, -0.3701537)
+spring_length = -1.0
+
+[node name="RightHandcollison" type="Area3D" parent="CameraPivot/Camera3D/ArmP/RightArm" unique_id=1771413883]
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/ArmP/RightArm/RightHandcollison" unique_id=982821165]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, -7.450581e-09, 0, 7.450581e-09, 0.1, -0.03507954, -0.0042077005, 0.0051219463)
+shape = SubResource("BoxShape3D_c7hf2")
+
+[node name="LeftArm" type="SpringArm3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1574398937]
+transform = Transform3D(1, 0, 0, 0, 0.9885308, -0.15101929, 0, 0.15101929, 0.9885308, -0.29011503, -0.25358254, -0.3701537)
+spring_length = -1.0
+
+[node name="LeftHandcollison" type="Area3D" parent="CameraPivot/Camera3D/ArmP/LeftArm" unique_id=271348346]
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/ArmP/LeftArm/LeftHandcollison" unique_id=266434284]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, -7.450581e-09, 0, 7.450581e-09, 0.1, -0.03507954, -0.0042077005, 0.0051219463)
+shape = SubResource("BoxShape3D_c7hf2")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CameraPivot/Camera3D/ArmP" unique_id=1633568317]
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D/ArmP" unique_id=971110383]
+target_position = Vector3(0, 0, -1.5)
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=410228293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="camerap" type="Marker3D" parent="." unique_id=540068442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72559255, 0)
+
+[node name="components" type="Node" parent="." unique_id=1969130596]
+script = ExtResource("2_28fbu")
+
+[node name="ClimbingComponent" type="Node" parent="components" unique_id=771376062 node_paths=PackedStringArray("player", "camera", "left_hand", "right_hand")]
+script = ExtResource("5_climb")
+player = NodePath("../..")
+camera = NodePath("../../CameraPivot/Camera3D")
+left_hand = NodePath("../LeftHandArmComponent")
+right_hand = NodePath("../RightHandArmComponent")
+
+[node name="LeftHandArmComponent" type="Node" parent="components" unique_id=1696233290 node_paths=PackedStringArray("spring_arm", "hand_visual", "hit_area", "camera")]
+script = ExtResource("6_hand")
+spring_arm = NodePath("../../CameraPivot/Camera3D/ArmP/LeftArm")
+hand_visual = NodePath("../../CameraPivot/Camera3D/LeftHand")
+hit_area = NodePath("../../CameraPivot/Camera3D/ArmP/LeftArm/LeftHandcollison")
+camera = NodePath("../../CameraPivot/Camera3D")
+rest_texture = ExtResource("1_c7hf2")
+grab_texture = ExtResource("2_pqla1")
+
+[node name="RightHandArmComponent" type="Node" parent="components" unique_id=1683440788 node_paths=PackedStringArray("spring_arm", "hand_visual", "hit_area", "camera")]
+script = ExtResource("6_hand")
+spring_arm = NodePath("../../CameraPivot/Camera3D/ArmP/RightArm")
+hand_visual = NodePath("../../CameraPivot/Camera3D/RightHand")
+hit_area = NodePath("../../CameraPivot/Camera3D/ArmP/RightArm/RightHandcollison")
+camera = NodePath("../../CameraPivot/Camera3D")
+hand_side = 1
+mouse_button = 2
+rest_texture = ExtResource("1_c7hf2")
+grab_texture = ExtResource("2_pqla1")

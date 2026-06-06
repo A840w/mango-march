@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://duuc0c7ifkybu"]
+
+[ext_resource type="PackedScene" uid="uid://c360x350e8oag" path="res://game/actors/player/player.tscn" id="1_bk8ha"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhudx"]
+albedo_color = Color(0.4392157, 1, 0.3647059, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lhudx"]
+height = 26.972
+
+[sub_resource type="BoxMesh" id="BoxMesh_lhudx"]
+size = Vector3(0.155, 0.07, 2.37)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lhudx"]
+size = Vector3(2.2583008, 0.0847168, 0.140625)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lhudx"]
+height = 0.25927734
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lhudx"]
+radius = 0.2
+height = 0.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lhudx"]
+radius = 0.2265625
+height = 0.4868164
+
+[node name="test" type="Node3D" unique_id=1103720266]
+
+[node name="ground" type="CSGBox3D" parent="." unique_id=1533261999]
+material_override = SubResource("StandardMaterial3D_lhudx")
+use_collision = true
+size = Vector3(50, 1, 50)
+
+[node name="trunk" type="MeshInstance3D" parent="." unique_id=1731884834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5369215, 0)
+mesh = SubResource("CylinderMesh_lhudx")
+
+[node name="branch" type="MeshInstance3D" parent="." unique_id=367751925]
+transform = Transform3D(0.0072780102, 0, 0.99997365, 0, 1, 0, -0.99997365, 0, 0.0072780102, -1.5256243, 4.559531, -0.12093529)
+mesh = SubResource("BoxMesh_lhudx")
+
+[node name="branch2" type="MeshInstance3D" parent="." unique_id=1896880004]
+transform = Transform3D(-0.8841656, 0, 0.46717393, 0, 1, 0, -0.46717393, 0, -0.8841656, -0.1386137, 6.6274443, 1.0026242)
+mesh = SubResource("BoxMesh_lhudx")
+
+[node name="branch3" type="MeshInstance3D" parent="." unique_id=2123726287]
+transform = Transform3D(-0.46944073, 0, 0.88296413, 0, 1, 0, -0.88296413, 0, -0.46944073, -1.3948784, 8.816561, 0.51428604)
+mesh = SubResource("BoxMesh_lhudx")
+
+[node name="climbable_branch" type="StaticBody3D" parent="." unique_id=899660117 groups=["ClimbableBranch", "climbable_trunk"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="climbable_branch" unique_id=1523659781 groups=["ClimbableBranch", "climbable_branch"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6040573, 4.5556083, -0.11230469)
+shape = SubResource("BoxShape3D_lhudx")
+
+[node name="climbable_trunk" type="StaticBody3D" parent="." unique_id=2110544867 groups=["ClimbableTree", "climbable_trunk"]]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="climbable_trunk" unique_id=1041736579 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1890175, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="climbable_trunk" unique_id=612721092 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.420547, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="climbable_trunk" unique_id=1311015084 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7177198, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="climbable_trunk" unique_id=1995176600 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8822737, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D10" type="CollisionShape3D" parent="climbable_trunk" unique_id=904194071 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.113803, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D12" type="CollisionShape3D" parent="climbable_trunk" unique_id=1633619120 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4109755, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D14" type="CollisionShape3D" parent="climbable_trunk" unique_id=1190210531 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.550873, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D16" type="CollisionShape3D" parent="climbable_trunk" unique_id=1715690341 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.782402, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D18" type="CollisionShape3D" parent="climbable_trunk" unique_id=222745560 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.079575, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D20" type="CollisionShape3D" parent="climbable_trunk" unique_id=930273898 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.28716, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D22" type="CollisionShape3D" parent="climbable_trunk" unique_id=1519043428 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.518689, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D24" type="CollisionShape3D" parent="climbable_trunk" unique_id=1393558034 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.815862, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D26" type="CollisionShape3D" parent="climbable_trunk" unique_id=478604401 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.893035, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D28" type="CollisionShape3D" parent="climbable_trunk" unique_id=376109543 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.124565, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="CollisionShape3D30" type="CollisionShape3D" parent="climbable_trunk" unique_id=633021135 groups=["ClimbableTree", "climbable_trunk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.421738, 0)
+shape = SubResource("CylinderShape3D_lhudx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=567193920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.912112, 0)
+mesh = SubResource("CapsuleMesh_lhudx")
+
+[node name="rigidbody_mango" type="RigidBody3D" parent="MeshInstance3D" unique_id=147344314]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/rigidbody_mango" unique_id=1048475485]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.008374214, 0)
+shape = SubResource("CapsuleShape3D_lhudx")
+
+[node name="player" parent="." unique_id=489851307 instance=ExtResource("1_bk8ha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15998173, 3.2568035, 4.6100106)
