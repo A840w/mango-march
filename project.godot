@@ -12,19 +12,16 @@ config_version=5
 
 config/name="MANGO MARCH"
 config/tags=PackedStringArray("jam", "main")
-run/main_scene="uid://c63y6b25bs4bk"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
-[display]
+[audio]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=4
+buses/default_bus_layout="uid://conh7gi682dj3"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
 
 [file_customization]
 
@@ -89,6 +86,16 @@ escape={
 "deadzone": 0.2,
 "events": []
 }
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_game_template/base/translations/menus_translations.fr.translation")
+
+[maaacks_game_template]
+
+disable_install_audio_busses=true
+disable_update_check=false
+disable_install_wizard=true
 
 [physics]
 

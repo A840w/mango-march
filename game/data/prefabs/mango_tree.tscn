@@ -1182,6 +1182,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008890152, 33.6369, 5.5328
 mesh = SubResource("ArrayMesh_sq0xa")
 
 [node name="climbable_branch" type="StaticBody3D" parent="." unique_id=205105875 groups=["ClimbableBranch", "climbable_trunk"]]
+collision_layer = 5
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="climbable_branch" unique_id=396204644 groups=["ClimbableBranch", "climbable_branch"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.99961853, 76.41647, -4.3241606)
@@ -1216,6 +1217,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008890152, 33.6369, 5.5328
 shape = SubResource("ConcavePolygonShape3D_hcibb")
 
 [node name="climbable_trunk" type="StaticBody3D" parent="." unique_id=361290271 groups=["ClimbableTree", "climbable_trunk"]]
+collision_layer = 5
 
 [node name="trunk2" type="CollisionShape3D" parent="climbable_trunk" unique_id=1766538084 groups=["ClimbableTree", "climbable_trunk"]]
 shape = SubResource("ConcavePolygonShape3D_aj7at")
