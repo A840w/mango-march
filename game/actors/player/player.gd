@@ -1,6 +1,10 @@
 class_name Player
 extends CharacterBody3D
 
+
+
+#hello 
+
 @export_category("Nodes")
 @export_group("reference nodes")
 @export var camera_pivot: Node3D 
