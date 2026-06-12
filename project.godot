@@ -12,7 +12,7 @@ config_version=5
 
 config/name="MANGO MARCH"
 config/tags=PackedStringArray("jam", "main")
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [audio]
@@ -21,7 +21,7 @@ buses/default_bus_layout="uid://conh7gi682dj3"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
+enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg", "res://addons/virtual_joystick_plus/plugin.cfg")
 
 [file_customization]
 
