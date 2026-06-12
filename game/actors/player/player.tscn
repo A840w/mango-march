@@ -227,5 +227,30 @@ volume_db = -20.0
 pitch_scale = 0.76
 autoplay = true
 
+[node name="Control" type="Control" parent="." unique_id=1090651337]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="Control" unique_id=641447013]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.081597224
+anchor_top = 0.66512346
+anchor_right = 0.11631945
+anchor_bottom = 0.7268519
+offset_bottom = -3.0517578e-05
+grow_vertical = 2
+joystick_mode = 1
+action_left = &"left"
+action_right = &"right"
+action_up = &"forward"
+action_down = &"down"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="body_entered" from="CameraPivot/Camera3D/ArmP/RightArm/RightHandcollison" to="." method="_on_right_handcollison_body_entered"]
 [connection signal="body_entered" from="CameraPivot/Camera3D/ArmP/LeftArm/LeftHandcollison" to="." method="_on_left_handcollison_body_entered"]
