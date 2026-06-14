@@ -7,5 +7,5 @@
 [node name="player_v2" type="CharacterBody3D" unique_id=2034604559]
 script = ExtResource("1_ralen")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=799036154]
+[node name="body" type="CollisionShape3D" parent="." unique_id=799036154]
 shape = SubResource("CapsuleShape3D_61ol6")
