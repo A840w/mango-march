@@ -3,6 +3,10 @@
 /android/
 .gitignore
 .gitattributes
+.import/
+.import
+.import/
+*.import
 /demo
 /export_window
 /html_exports
