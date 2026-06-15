@@ -3,8 +3,7 @@
 /android/
 .gitignore
 .gitattribute
-.import/
-*.import
+
 /demo
 /export_window
 /html_exports
